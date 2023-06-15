@@ -24,15 +24,12 @@
 typedef enum{
 	First_Operand,
 	Second_Operand,
-	Result
+	Result,
+	calculator_states_max
 }calculator_states_t;
 
-//----------------------------------------------
-// Section: Macros Configuration References
-//----------------------------------------------
-
-// @ref Module_Ref_Name_define
-
+extern void (*pfCalculator_State_Handler)();
+extern uint8 USER_RESET_FLAG; // if 1, then user wants to restart the app
 
 /*
  * =============================================

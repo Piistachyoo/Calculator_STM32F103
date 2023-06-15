@@ -20,9 +20,10 @@ static uint8 user_input_index;					// Variable to hold the length of the array
 static uint8 pressed_key;
 static calculator_states_t calculator_states_id;
 void (*pfCalculator_State_Handler)() = STATE_CALL(First_Operand);
-extern uint8 USER_RESET_FLAG; 					// To be set to 1 if user wants to exit this mode
+uint8 USER_RESET_FLAG; 					// To be set to 1 if user wants to exit this mode
 static uint8 double_check_before_quitting;
 static uint8 result_string[ARRAY_MAX_SIZE];
+
 
 /**=============================================
   * @Fn				- Flush_Array
@@ -126,6 +127,7 @@ STATE_DEF(First_Operand){
 	}
 	/* User pressed clear */
 	else if('C' == pressed_key){
+		/* Clear screen, or exit if pressed twice in a row */
 		LCD_Send_Command(LCD_CLEAR_DISPLAY);
 		first_op = 0;
 		second_op = 0;
@@ -189,6 +191,7 @@ STATE_DEF(Second_Operand){
 	}
 	/* User pressed clear */
 	else if('C' == pressed_key){
+		/* Clear screen, or exit if pressed twice in a row */
 		double_check_before_quitting = 1; // flag for first operand state that user pressed C
 		first_op = 0;
 		second_op = 0;
@@ -249,6 +252,7 @@ STATE_DEF(Result){
 	}
 	/* User pressed clear */
 	else if('C' == pressed_key){
+		/* Clear screen, or exit if pressed twice in a row */
 		double_check_before_quitting = 1; // flag for first operand state that user pressed C
 		first_op = 0;
 		second_op = 0;

@@ -15,6 +15,8 @@
 #include "lcd_driver.h"
 #include "keypad_driver.h"
 #include "states.h"
+#include "calculator.h"
+#include "numbering.h"
 
 
 
