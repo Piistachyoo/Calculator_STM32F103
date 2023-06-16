@@ -27,7 +27,7 @@ static uint8 result_string[ARRAY_MAX_SIZE];
 
 /**=============================================
   * @Fn				- Flush_Array
-  * @brief 			- This function copies elements of arr to destination and clears array elements
+  * @brief 			- This function copies elements of arr to destination
   * @param 		 	- arr: Pointer to the source array
   * @param 		 	- length: Length of data in the array
   * @param 		 	- destination: Destination variable to save array elements into
@@ -49,7 +49,6 @@ static void Flush_Array(uint8 *arr, uint8 *length, uint32 *destination){
 		*destination /= 10;
 	}
 	*length = 0;
-//	memset(arr, 0, ARRAY_MAX_SIZE);
 }
 
 /**=============================================
@@ -160,7 +159,6 @@ STATE_DEF(Second_Operand){
 
 	/* User entered a number */
 	if((0 <= pressed_key) && (10 > pressed_key)){
-		double_check_before_quitting = 0; // Clear flag
 		/* Validate that we are not writing outside array boundaries */
 		if(user_input_index < ARRAY_MAX_SIZE){
 			LCD_Send_Char(pressed_key+48);
@@ -171,7 +169,6 @@ STATE_DEF(Second_Operand){
 	}
 	/* User entered a operation sign */
 	else if(('+' == pressed_key) || ('-' == pressed_key) || ('x' == pressed_key) || ('/' == pressed_key)){
-		double_check_before_quitting = 0; // Clear flag
 		Flush_Array(user_input, &user_input_index, &second_op);
 		result = Calculate_Result(first_op, second_op, operation);
 		sprintf((char*)result_string, "%lu", result);
@@ -185,7 +182,6 @@ STATE_DEF(Second_Operand){
 	}
 	/* User Pressed = */
 	else if('=' == pressed_key){
-		double_check_before_quitting = 0; // Clear flag
 		Flush_Array(user_input, &user_input_index, &second_op);
 		pfCalculator_State_Handler = STATE_CALL(Result);
 	}
@@ -247,7 +243,6 @@ STATE_DEF(Result){
 	}
 	/* User Pressed = */
 	else if('=' == pressed_key){
-//		Flush_Array(user_input, &user_input_index, &second_op);
 		pfCalculator_State_Handler = STATE_CALL(Result);
 	}
 	/* User pressed clear */

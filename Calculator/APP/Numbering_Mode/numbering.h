@@ -15,6 +15,7 @@
 #include "lcd_driver.h"
 #include "keypad_driver.h"
 #include "states.h"
+#include <string.h>
 
 //----------------------------------------------
 // Section: User type definitions
@@ -28,6 +29,7 @@ typedef enum{
 }numbering_states_t;
 
 extern void (*pf_Numbering_State_Handler)(void);
+extern uint8 USER_RESET_FLAG; // if 1, then user wants to restart the app
 
 /*
  * =============================================
