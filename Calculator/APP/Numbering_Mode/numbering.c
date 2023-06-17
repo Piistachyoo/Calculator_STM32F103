@@ -180,8 +180,12 @@ static void DecToOct(){
 			Octal_Length++;
 		}
 
-		/* Reverse "Octal_Number" array */
-		Reverse_Array(Octal_Number, (Octal_Length-1));
+		/* Check if there is a number in "Octal_Number" array */
+		if(0 != Octal_Length){
+			/* Reverse "Octal_Number" array */
+			Reverse_Array(Octal_Number, (Octal_Length-1));
+		}
+		else{ /* Do Nothing */ }
 	}
 }
 
@@ -224,8 +228,12 @@ static void OctToDec(){
 		/* Save "decimal_value" in "Decimal_Number" Array */
 		Decimal_Length = Integer_To_Array_Reversed(decimal_value, Decimal_Number);
 
-		/* Reverse "Decimal_Number" array */
-		Reverse_Array(Decimal_Number, (Decimal_Length-1));
+		/* Check if there is a number in "Decimal_Number" array */
+		if(0 != Decimal_Length){
+			/* Reverse "Decimal_Number" array */
+			Reverse_Array(Decimal_Number, (Decimal_Length-1));
+		}
+		else{ /* Do Nothing */ }
 	}
 }
 
@@ -264,8 +272,12 @@ static void DecToBin(){
 			Binary_Length++;
 		}
 
-		/* Reverse "Octal_Number" array */
-		Reverse_Array(Binary_Number, (Binary_Length-1));
+		/* Check if there is a number in "Binary_Number" array */
+		if(0 != Binary_Length){
+			/* Reverse "Binary_Number" array */
+			Reverse_Array(Binary_Number, (Binary_Length-1));
+		}
+		else{ /* Do Nothing */ }
 	}
 }
 
@@ -308,8 +320,12 @@ static void BinToDec(){
 		/* Save "decimal_value" in "Decimal_Number" Array */
 		Decimal_Length = Integer_To_Array_Reversed(decimal_value, Decimal_Number);
 
-		/* Reverse "Decimal_Number" array */
-		Reverse_Array(Decimal_Number, (Decimal_Length-1));
+		/* Check if there is a number in "Decimal_Number" array */
+		if(0 != Decimal_Length){
+			/* Reverse "Decimal_Number" array */
+			Reverse_Array(Decimal_Number, (Decimal_Length-1));
+		}
+		else{ /* Do Nothing */ }
 	}
 }
 
@@ -348,8 +364,12 @@ static void DecToHex(){
 			Hexadecimal_Length++;
 		}
 
-		/* Reverse "Hexa_Number" array */
-		Reverse_Array(Hexa_Number, (Hexadecimal_Length-1));
+		/* Check if there is a number in "Hexa_Number" array */
+		if(0 != Hexadecimal_Length){
+			/* Reverse "Hexa_Number" array */
+			Reverse_Array(Hexa_Number, (Hexadecimal_Length-1));
+		}
+		else{ /* Do Nothing */ }
 	}
 }
 
@@ -392,8 +412,12 @@ static void HexToDec(){
 		/* Save "decimal_value" in "Decimal_Number" Array */
 		Decimal_Length = Integer_To_Array_Reversed(decimal_value, Decimal_Number);
 
-		/* Reverse "Decimal_Number" array */
-		Reverse_Array(Decimal_Number, (Decimal_Length-1));
+		/* Check if there is a number in "Decimal_Number" array */
+		if(0 != Decimal_Length){
+			/* Reverse "Decimal_Number" array */
+			Reverse_Array(Decimal_Number, (Decimal_Length-1));
+		}
+		else{ /* Do Nothing */ }
 	}
 }
 
