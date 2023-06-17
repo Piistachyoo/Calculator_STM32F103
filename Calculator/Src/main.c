@@ -10,16 +10,15 @@
 #include "app.h"
 
 static void (*pfMain_State_Handler)(void) = NULL;
+static void (*pfMain_User_Selection)(void) = NULL;
 static main_states_t main_state_id;
-static user_selection_t user_selection_id = USER_UNDEFINED;
-
-
+static user_selection_t user_selection_flag = USER_UNDEFINED;
 
 int main(void)
 {
 	/* Initial state is MAIN_INIT */
 	pfMain_State_Handler = STATE_CALL(MAIN_INIT);
-
+	pfMain_User_Selection = STATE_CALL(MAIN_SELECTION);
 	while(1){
 		pfMain_State_Handler();
 
@@ -105,7 +104,8 @@ STATE_DEF(MAIN_SELECTION){
 		pressed_key = keypad_Get_Pressed_Key();
 	}
 
-	user_selection_id = pressed_key;
+	user_selection_flag = pressed_key;
+
 	LCD_Send_Command(LCD_CLEAR_DISPLAY);
 
 	pfMain_State_Handler = STATE_CALL(MAIN_RUNNING);
@@ -124,10 +124,10 @@ STATE_DEF(MAIN_RUNNING){
 	main_state_id = MAIN_RUNNING;
 
 	/* State Action */
-	if(USER_CALCULATOR == user_selection_id){
+	if(USER_CALCULATOR == user_selection_flag){
 		pfCalculator_State_Handler();
 	}
-	else if(USER_NUMBERING == user_selection_id){
+	else if(USER_NUMBERING == user_selection_flag){
 		pf_Numbering_State_Handler();
 	}
 	else{

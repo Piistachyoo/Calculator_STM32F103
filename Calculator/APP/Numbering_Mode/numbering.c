@@ -447,6 +447,7 @@ STATE_DEF(Decimal_Mode){
 		/* Go to hexadecimal mode */
 		DecToHex();
 		LCD_Send_Command(LCD_CLEAR_DISPLAY);
+		LCD_Send_String((uint8*)"0x");
 		Print_Array_LCD(Hexa_Number, Hexadecimal_Length);
 		pf_Numbering_State_Handler = STATE_CALL(Hexadecimal_Mode);
 	}
@@ -512,6 +513,7 @@ STATE_DEF(Octal_Mode){
 		OctToDec();
 		DecToHex();
 		LCD_Send_Command(LCD_CLEAR_DISPLAY);
+		LCD_Send_String((uint8*)"0x");
 		Print_Array_LCD(Hexa_Number, Hexadecimal_Length);
 		pf_Numbering_State_Handler = STATE_CALL(Hexadecimal_Mode);
 	}
@@ -573,6 +575,7 @@ STATE_DEF(Binary_Mode){
 		BinToDec();
 		DecToHex();
 		LCD_Send_Command(LCD_CLEAR_DISPLAY);
+		LCD_Send_String((uint8*)"0x");
 		Print_Array_LCD(Hexa_Number, Hexadecimal_Length);
 		pf_Numbering_State_Handler = STATE_CALL(Hexadecimal_Mode);
 	}
@@ -600,7 +603,7 @@ STATE_DEF(Hexadecimal_Mode){
 	if(Hexadecimal_Mode != numbering_state_id){
 		numbering_state_id = Hexadecimal_Mode;
 		LCD_Send_string_Pos((uint8*)"HEXA", LCD_SECOND_ROW, (LCD_MAX_COL-4));
-		LCD_Set_Cursor(LCD_FIRST_ROW, Hexadecimal_Length + 1);
+		LCD_Set_Cursor(LCD_FIRST_ROW, Hexadecimal_Length + 3);
 	}
 
 	/* State Action */
