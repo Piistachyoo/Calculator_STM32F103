@@ -24,31 +24,16 @@
 #define SRAM_MEMORY_BASE					0x20000000UL
 #define PERIPHERALS_BASE					0x40000000UL
 #define Cortex_M3_Internal_Peripherals_Base	0xE0000000UL
-#define NVIC_BASE							0xE000E100UL
+
 
 //----------------------------------------------
 // Section: Base addresses for Cortex-M3 Peripherals
 //----------------------------------------------
 
-	/* NVIC: */
-#define NVIC_ISER0			(*(vuint32_t*)(NVIC_BASE))
-#define NVIC_ISER1			(*(vuint32_t*)(NVIC_BASE + 0x004))
-#define NVIC_ISER2			(*(vuint32_t*)(NVIC_BASE + 0x008))
-#define NVIC_ICER0			(*(vuint32_t*)(NVIC_BASE + 0x080))
-#define NVIC_ICER1			(*(vuint32_t*)(NVIC_BASE + 0x084))
-#define NVIC_ICER2			(*(vuint32_t*)(NVIC_BASE + 0x088))
-#define NVIC_ISPR0			(*(vuint32_t*)(NVIC_BASE + 0x100))
-#define NVIC_ISPR1			(*(vuint32_t*)(NVIC_BASE + 0x104))
-#define NVIC_ISPR2			(*(vuint32_t*)(NVIC_BASE + 0x108))
-#define NVIC_ICPR0			(*(vuint32_t*)(NVIC_BASE + 0x180))
-#define NVIC_ICPR1			(*(vuint32_t*)(NVIC_BASE + 0x184))
-#define NVIC_ICPR2			(*(vuint32_t*)(NVIC_BASE + 0x188))
-#define NVIC_IABR0			(*(vuint32_t*)(NVIC_BASE + 0x200))
-#define NVIC_IABR1			(*(vuint32_t*)(NVIC_BASE + 0x204))
-#define NVIC_IABR2			(*(vuint32_t*)(NVIC_BASE + 0x208))
-#define NVIC_IPR0			(*(vuint32_t*)(NVIC_BASE + 0x300))
-#define NVIC_IPR2			(*(vuint32_t*)(NVIC_BASE + 0x320))
-#define NVIC_STIR			(*(vuint32_t*)(NVIC_BASE + 0xE00))
+#define NVIC_BASE							0xE000E100UL
+#define SCB_BASE							0xE000ED00UL
+#define STK_BASE							0xE000E010UL
+
 
 //----------------------------------------------
 // Section: Base addresses for AHB Peripherals
@@ -83,31 +68,55 @@
 // Section: Base addresses for APB1 Peripherals
 //----------------------------------------------
 
-//----------------------------------------------
-// Section: Interrupt Vector Table
-//----------------------------------------------
-#define EXTI0_IRQ	6
-#define EXTI1_IRQ	7
-#define EXTI2_IRQ	8
-#define EXTI3_IRQ	9
-#define EXTI4_IRQ	10
-#define EXTI5_IRQ	23
-#define EXTI6_IRQ	23
-#define EXTI7_IRQ	23
-#define EXTI8_IRQ	23
-#define EXTI9_IRQ	23
-#define EXTI10_IRQ	40
-#define EXTI11_IRQ	40
-#define EXTI12_IRQ	40
-#define EXTI13_IRQ	40
-#define EXTI14_IRQ	40
-#define EXTI15_IRQ	40
+
 
 //======================================================//
 
 //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 // Section: Peripheral registers
 //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+		/* NVIC */
+typedef struct{
+	vuint32_t ISER[3];
+	uint32 RESERVED0[29];
+	vuint32_t ICER[3];
+	uint32 RESERVED1[29];
+	vuint32_t ISPR[3];
+	uint32 RESERVED2[29];
+	vuint32_t ICPR[3];
+	uint32 RESERVED3[29];
+	vuint32_t IABR[3];
+	uint32 RESERVED4[61];
+	vuint8_t IP[80];
+	uint32 RESERVED5[684];
+	vuint32_t STIR;
+}NVIC_TypeDef;
+
+		/* SCB */
+typedef struct{
+	vuint32_t CPUID;
+	vuint32_t ICSR;
+	vuint32_t VTOR;
+	vuint32_t AIRCR;
+	vuint32_t SCR;
+	vuint32_t CCR;
+	vuint8_t  SHP[12];
+	vuint32_t SHCSR;
+	vuint32_t CFSR;
+	vuint32_t HFSR;
+	uint32	  RESERVED;
+	vuint32_t MMAR;
+	vuint32_t BFAR;
+}SCB_TypeDef;
+
+		/* STK */
+typedef struct{
+	vuint32_t CTRL;
+	vuint32_t LOAD;
+	vuint32_t VAL;
+	vuint32_t CALIB;
+}STK_TypeDef;
 
 		/* GPIO */
 typedef struct{
@@ -159,6 +168,10 @@ typedef struct{
 // Section: Peripheral instants
 //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 
+#define NVIC		((NVIC_TypeDef*)NVIC_BASE)
+#define SCB			((SCB_TypeDef* )SCB_BASE )
+#define STK			((STK_TypeDef* )STK_BASE )
+
 #define GPIOA		((GPIO_TypeDef*)GPIOA_BASE)
 #define GPIOB		((GPIO_TypeDef*)GPIOB_BASE)
 #define GPIOC		((GPIO_TypeDef*)GPIOC_BASE)
@@ -194,23 +207,6 @@ typedef struct{
 //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 // Section: NVIC IRQ enable/disable Macros
 //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
-
-#define NVIC_IRQ6_EXTI0_Enable()		(NVIC_ISER0 |= (1<<6))
-#define NVIC_IRQ7_EXTI1_Enable()		(NVIC_ISER0 |= (1<<7))
-#define NVIC_IRQ8_EXTI2_Enable()		(NVIC_ISER0 |= (1<<8))
-#define NVIC_IRQ9_EXTI3_Enable()		(NVIC_ISER0 |= (1<<9))
-#define NVIC_IRQ10_EXTI4_Enable()		(NVIC_ISER0 |= (1<<10))
-#define NVIC_IRQ23_EXTI5_9_Enable()		(NVIC_ISER0 |= (1<<23))
-#define NVIC_IRQ40_EXTI10_15_Enable()	(NVIC_ISER1 |= (1<<8))
-
-
-#define NVIC_IRQ6_EXTI0_Disable()		(NVIC_ICER0 |= (1<<6))
-#define NVIC_IRQ7_EXTI1_Disable()		(NVIC_ICER0 |= (1<<7))
-#define NVIC_IRQ8_EXTI2_Disable()		(NVIC_ICER0 |= (1<<8))
-#define NVIC_IRQ9_EXTI3_Disable()		(NVIC_ICER0 |= (1<<9))
-#define NVIC_IRQ10_EXTI4_Disable()		(NVIC_ICER0 |= (1<<10))
-#define NVIC_IRQ23_EXTI5_9_Disable()	(NVIC_ICER0 |= (1<<23))
-#define NVIC_IRQ40_EXTI10_15_Disable()	(NVIC_ICER1 |= (1<<8))
 
 
 //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-

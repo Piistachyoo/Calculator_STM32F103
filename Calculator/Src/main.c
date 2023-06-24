@@ -39,21 +39,6 @@ void clock_init(){
 }
 
 /**=============================================
-  * @Fn				- my_delay
-  * @brief 			- This function will make a delay without using a timer
-  * @param [in] 	- None
-  * @param [out] 	- None
-  * @retval 		- None
-  * Note			- None
-  */
-void my_delay(int x){
-	int i, j;
-	for(i = 0; i < x; i++){
-		for(j = 0; j < 255; j++);
-	}
-}
-
-/**=============================================
   * @Fn				- MAIN_INIT
   * @brief 			- This function initializes clock, peripherals, LCD, and keypad
   * @param [in] 	- None
@@ -93,7 +78,7 @@ STATE_DEF(MAIN_SELECTION){
 	LCD_Send_Command(LCD_CLEAR_DISPLAY);
 	LCD_Send_string_Pos((uint8*)"<<Calculator>>", LCD_FIRST_ROW, 2);
 	LCD_Send_string_Pos((uint8*)"Select calc mode", LCD_SECOND_ROW, 0);
-	my_delay(5000);
+	MCAL_STK_Delay1ms(2500);
 	LCD_Send_Command(LCD_CLEAR_DISPLAY);
 	LCD_Send_string_Pos((uint8*)"1:Calculator", LCD_FIRST_ROW, 1);
 	LCD_Send_string_Pos((uint8*)"2:Numbering Mode", LCD_SECOND_ROW, 1);
